@@ -403,3 +403,34 @@ h1 {
 #modalBtnCancel:hover {
     background-color: #5a6268;
 }
+/* [Thêm vào cuối tệp: web/style.css] */
+
+/* --- CSS CHO NƯỚC ĐI GẦN NHẤT --- */
+
+/* 1. Ô mới (nơi đến): Tô màu xám toàn ô */
+/* (Giống .in-check nhưng màu xám) */
+.square.last-move-end {
+    background-color: rgba(170, 170, 170, 0.6) !important;
+}
+
+/* 2. Ô cũ (nơi đi): Chấm tròn xám */
+/* (Giống .valid-move-empty nhưng màu xám) */
+.square.last-move-start {
+    position: relative; /* Bắt buộc phải có */
+    z-index: 1;
+}
+.square.last-move-start::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    /* Lấy kích thước từ .valid-move-empty */
+    width: 25%;
+    height: 25%;
+
+    background-color: rgba(80, 80, 80, 0.5); /* Màu xám đậm */
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}

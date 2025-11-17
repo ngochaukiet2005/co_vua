@@ -15,8 +15,9 @@ function setLastMove(move) {
  * Xóa highlight của nước đi trước đó khỏi bàn cờ.
  */
 function clearLastMoveHighlights() {
-    document.querySelectorAll(".square.last-move-from, .square.last-move-to").forEach(sq => {
-        sq.classList.remove("last-move-from", "last-move-to");
+    // Sử dụng class .last-move-start và .last-move-end
+    document.querySelectorAll(".square.last-move-start, .square.last-move-end").forEach(sq => {
+        sq.classList.remove("last-move-start", "last-move-end");
     });
 }
 
@@ -33,10 +34,11 @@ function applyLastMoveHighlights() {
     const fromSquare = document.querySelector(`.square[data-r="${fromR}"][data-c="${fromC}"]`);
     const toSquare = document.querySelector(`.square[data-r="${toR}"][data-c="${toC}"]`);
     
-    // Highlight ô bắt đầu (vị trí cũ)
-    if (fromSquare) fromSquare.classList.add("last-move-from");
-    // Highlight ô kết thúc (vị trí mới)
-    if (toSquare) toSquare.classList.add("last-move-to");
+    // Highlight ô bắt đầu (vị trí cũ) -> Dùng class "last-move-start"
+    if (fromSquare) fromSquare.classList.add("last-move-start");
+    
+    // Highlight ô kết thúc (vị trí mới) -> Dùng class "last-move-end"
+    if (toSquare) toSquare.classList.add("last-move-end");
 }
 
 // "Xuất" các hàm này ra để tệp khác có thể sử dụng

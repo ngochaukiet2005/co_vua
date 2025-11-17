@@ -410,7 +410,7 @@ h1 {
 /* 1. Ô mới (nơi đến): Tô màu xám toàn ô */
 /* (Giống .in-check nhưng màu xám) */
 .square.last-move-end {
-    background-color: rgba(170, 170, 170, 0.6) !important;
+    background-color: #B4B4B4 !important;
 }
 
 /* 2. Ô cũ (nơi đi): Chấm tròn xám */

@@ -269,7 +269,8 @@ async def handler(ws):
                             "turn": gs.turn,
                             "status": status,
                             "valid_moves": serialize_moves(next_turn_moves),
-                            "check_pos": king_in_check_pos
+                            "check_pos": king_in_check_pos,
+                            "last_move": {"from": [move_to_make.sqStart[0], move_to_make.sqStart[1]], "to": [move_to_make.sqEnd[0], move_to_make.sqEnd[1]]}
                         }
                         
                         # --- SỬA CÁCH GỬI (QUAN TRỌNG) ---

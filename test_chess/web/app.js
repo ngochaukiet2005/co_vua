@@ -103,8 +103,20 @@ async function handleServerMessage(data) {
             currentState.turn = data.turn;
             allValidMoves = data.valid_moves || [];
             isMyTurn = (currentState.turn === myColor);
+            // --- LOGIC MỚI ĐỂ HIGHLIGHT NƯỚC ĐI ---
+            // 1. Lưu nước đi cuối cùng (nếu server gửi)
+            if (data.last_move) {
+                setLastMove(data.last_move);
+            }
             
-            renderBoard(); // Vẽ lại bàn cờ (xóa highlight cũ)
+            // 2. Xóa highlight CŨ (nếu có)
+            clearLastMoveHighlights(); 
+            
+            renderBoard(); // Vẽ lại bàn cờ
+            
+            // 3. Áp dụng highlight MỚI
+            applyLastMoveHighlights(); 
+            // --- KẾT THÚC LOGIC MỚI ---
             
             // Highlight Vua bị chiếu
             if (data.check_pos) {

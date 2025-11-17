@@ -1,0 +1,405 @@
+/* style.css (Đã cập nhật responsive - Dựa trên file của bạn) */
+
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 10px; /* SỬA: Thêm padding cho an toàn trên mobile */
+    background-image: url('background.jpg');
+    background-size: cover;
+    background-position: center;
+    color: white; 
+    box-sizing: border-box;
+    text-align: center;
+    overflow-x: hidden; /* SỬA: Ngăn cuộn ngang trên mobile */
+}
+
+h1 {
+    margin-top: 30px;
+    /* SỬA: Dùng clamp() để font co giãn */
+    font-size: clamp(30px, 8vw, 40px);
+    font-weight: bold;
+    text-shadow: 2px 2px 8px black;
+}
+
+#mainMenu {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 30px;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    align-items: center;
+    
+    /* SỬA: Đặt chiều rộng linh hoạt */
+    width: 90%;
+    max-width: 400px;
+    box-sizing: border-box;
+}
+
+#mainMenu button {
+    padding: 12px 20px;
+    /* SỬA: Rộng 100% theo #mainMenu */
+    width: 100%;
+    box-sizing: border-box;
+    
+    font-size: 1.1em;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+#mainMenu button:hover {
+    background-color: #0056b3;
+    transform: scale(1.05);
+}
+
+#roomInput {
+    /* SỬA: Rộng 100% theo #mainMenu */
+    width: 100%;
+    box-sizing: border-box;
+    
+    padding: 10px;
+    font-size: 1.1em;
+    text-align: center;
+    border: 2px solid #aaa;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+    color: #333;
+    text-transform: uppercase;
+}
+
+.divider {
+    width: 80%;
+    border: none;
+    height: 1px;
+    background-color: #555;
+    margin: 10px 0;
+}
+
+#gameUI {
+    display: none; 
+    text-align: center;
+    width: 100%;
+}
+
+#gameStatus {
+    /* SỬA: Rộng theo bàn cờ */
+    width: 90vmin;
+    max-width: 480px;
+
+    margin: 10px auto;
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #e0e0e0;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+    min-height: 1.5em; 
+}
+
+#gameStatus p {
+    margin: 0;
+    text-align: center; 
+}
+
+#gameStatus.in-game #roomInfo {
+    display: none; 
+}
+
+#gameContainer {
+    display: grid;
+    grid-template-columns: 1fr; 
+    justify-items: center; 
+    gap: 10px; 
+}
+
+/* --- THAY ĐỔI LỚN NHẤT (BÀN CỜ) --- */
+#board {
+    display: grid;
+    
+    /* SỬA: Dùng % thay vì px cố định */
+    grid-template-columns: repeat(8, 12.5%); 
+    grid-template-rows: repeat(8, 12.5%);   
+
+    /* SỬA: Dùng vmin và max-width thay vì width/height 480px */
+    width: 90vmin; 
+    height: 90vmin; 
+    max-width: 480px;
+    max-height: 480px;
+    
+    border: 2px solid #555;
+    box-shadow: 0 0 15px rgba(0,0,0,0.5);
+    transform-origin: center center; 
+}
+/* --- KẾT THÚC THAY ĐỔI LỚN --- */
+
+.board-rotated {
+    transform: rotate(180deg);
+}
+
+.square {
+    /* SỬA: Xóa width: 60px và height: 60px */
+    /* (Nó sẽ tự động lấy 12.5% từ #board) */
+    position: relative;
+    overflow: hidden;
+}
+
+.light { background-color: #f0d9b5; }
+.dark  { background-color: #b58863; }
+
+.piece {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 80%;
+    cursor: grab;
+    z-index: 10;
+    transform-origin: center center;
+}
+
+.piece[draggable="true"] {
+    cursor: grab;
+}
+
+.piece[draggable="true"]:active {
+    cursor: grabbing;
+}
+
+.board-rotated .piece {
+    transform: rotate(180deg);
+}
+
+.game-controls {
+    margin-top: 20px;
+}
+
+.game-controls button {
+    padding: 12px 20px;
+    
+    /* SỬA: Giữ nguyên 220px nhưng thêm max-width */
+    width: 220px;
+    max-width: 90%; /* An toàn cho mobile */
+
+    font-size: 18px;
+    background-color: #2b7cff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.game-controls button:hover {
+    transform: scale(1.05);
+    background-color: #1e5ed1;
+}
+
+.square.selected {
+    background-color: #5f9ea0 !important;
+}
+
+.square.valid-move-empty {
+    position: relative;
+    z-index: 1;
+}
+.square.valid-move-empty::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    /* SỬA: Dùng % để chấm tròn co giãn */
+    width: 25%;
+    height: 25%;
+
+    background-color: rgba(0, 0, 0, 0.3);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+}
+
+/* (Các class highlight ăn quân và chiếu vua được giữ nguyên 100%) */
+.square.valid-move-capture {
+    position: relative;
+    z-index: 1; 
+}
+.square.valid-move-capture::before { 
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 200, 0, 0.4); 
+    border-radius: 5px; 
+    box-sizing: border-box;
+    z-index: 2; 
+    pointer-events: none; 
+    animation: captureHighlight 1s ease-out forwards; 
+    box-shadow: 0 0 10px rgba(0, 200, 0, 0.6); 
+}
+
+@keyframes captureHighlight {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.square.in-check {
+    background-color: #ff4d4d !important;
+}
+
+/* --- CSS CHO PHONG CẤP --- */
+
+/* style.css (CODE MỚI - Thêm overlay và sửa modal) */
+
+/* 1. CSS cho lớp phủ (overlay) mới */
+#promotionModalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7); /* Nền mờ */
+    display: flex; /* Dùng flex để căn giữa */
+    align-items: center;
+    justify-content: center;
+    z-index: 999; /* Dưới modal alert (2000) */
+}
+
+/* 2. Sửa lại CSS cho hộp modal (bỏ căn giữa, vì overlay đã lo) */
+#promotionModal {
+    /* Bỏ: position, top, left, transform, z-index */
+
+    display: flex; 
+    gap: 10px;
+    padding: 20px;
+    background: rgba(40, 40, 40, 0.95);
+    border: 2px solid #fff;
+    border-radius: 10px;
+}
+
+.promo-choice {
+    /* SỬA: Dùng vmin và max-width thay vì 60px */
+    width: 12vmin;
+    height: 12vmin;
+    max-width: 60px;
+    max-height: 60px;
+
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.promo-choice:hover {
+    transform: scale(1.1);
+}
+/* style.css (Thêm vào cuối file) */
+
+/* --- CSS CHO MODAL TÙY CHỈNH --- */
+
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    /* Hiệu ứng mờ dần */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* Lớp 'show' sẽ được JS thêm vào để hiện modal */
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-box {
+    background: #2c2c2c;
+    color: #f0f0f0;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
+    text-align: center;
+    
+    /* Responsive */
+    width: 90%;
+    max-width: 400px;
+    
+    /* Hiệu ứng trượt vào */
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal-overlay.show .modal-box {
+    transform: scale(1);
+}
+
+.modal-box h2 {
+    margin-top: 0;
+    color: #fff;
+    font-size: 1.5em;
+}
+
+.modal-box p {
+    font-size: 1.1em;
+    margin-bottom: 25px;
+    line-height: 1.5;
+}
+
+#modalButtons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+#modalButtons button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 100px;
+}
+
+#modalBtnConfirm {
+    background-color: #007bff;
+    color: white;
+}
+#modalBtnConfirm:hover {
+    background-color: #0056b3;
+}
+
+#modalBtnCancel {
+    background-color: #6c757d;
+    color: white;
+}
+#modalBtnCancel:hover {
+    background-color: #5a6268;
+}

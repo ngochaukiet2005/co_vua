@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Online</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Chess Online</h1>
+
+    <div id="mainMenu">
+        <button id="btnPlay">Play (Tìm trận nhanh)</button>
+        <hr class="divider">
+        <button id="btnCreate">Tạo phòng mới</button>
+        <input type="text" id="roomInput" placeholder="Nhập mã phòng...">
+        <button id="btnJoin">Vào phòng</button>
+    </div>
+
+    <div id="gameUI" style="display: none;">
+        <div id="gameStatus">
+            <p id="status"></p>
+            <span class="room-info" id="roomInfo"></span>
+        </div>
+
+        <div id="gameContainer" style="display: none;">
+            <div id="board"></div>
+        </div>
+        
+        <div class="game-controls">
+            <button id="btnBack">Về Menu</button>
+        </div>
+    </div>
+    
+    <div id="promotionModalOverlay" style="display: none;">
+        <div id="promotionModal"> 
+            <div class="promo-choice" id="promoChoiceQ"></div>
+            <div class="promo-choice" id="promoChoiceR"></div>
+            <div class="promo-choice" id="promoChoiceB"></div>
+            <div class="promo-choice" id="promoChoiceN"></div>
+        </div>
+    </div>
+    
+    <div id="customModalOverlay" class="modal-overlay" style="display: none;">
+        <div id="customModal" class="modal-box">
+            <h2 id="modalTitle">Thông báo</h2>
+            <p id="modalMessage">Đây là nội dung tin nhắn...</p>
+            <div id="modalButtons">
+                <button id="modalBtnConfirm">Đồng ý</button>
+                <button id="modalBtnCancel">Hủy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>

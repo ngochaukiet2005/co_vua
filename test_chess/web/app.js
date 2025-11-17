@@ -1,5 +1,5 @@
 /* web/app.js */
-
+import { setLastMove, clearLastMoveHighlights, applyLastMoveHighlights } from './highlight.js';
 const mainMenu = document.getElementById("mainMenu");
 const gameUI   = document.getElementById("gameUI");
 const boardEl  = document.getElementById("board");
